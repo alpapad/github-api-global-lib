@@ -5,40 +5,40 @@ def call(Map pipelineParams) {
         stages {
             stage('checkout git') {
                 steps {
-                   sh 'echo checkout git' 
+                   //sh 'echo checkout git' 
                 }
             }
 
             stage('build') {
                 steps {
-                    sh 'echo build'
+                    //sh 'echo build'
                 }
             }
 
             stage ('test') {
                 steps {
                     parallel (
-                        sh 'echo test 1'
-                        sh 'echo test 2'
+                        //sh 'echo test 1'
+                        //sh 'echo test 2'
                     )
                 }
             }
 
             stage('deploy developmentServer'){
                 steps {
-                    sh 'echo deploy developmentServer' 
+                    //sh 'echo deploy developmentServer' 
                 }
             }
 
             stage('deploy staging'){
                 steps {
-                    sh 'echo staging'
+                    //sh 'echo staging'
                 }
             }
 
             stage('deploy production'){
                 steps {
-                   sh 'echo deploy production' 
+                   //sh 'echo deploy production' 
                 }
             }
         }
