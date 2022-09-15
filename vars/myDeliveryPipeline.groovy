@@ -11,47 +11,40 @@ def call(body) {
         stages {
             stage('checkout git') {
                 steps {
-                    echo "The build number is even"
-                   //sh 'echo checkout git' 
+                    sh 'mvn clean package -DskipTests=true'
                 }
             }
 
             stage('build') {
                 steps {
-                    echo "The build number is even"
-                    //sh 'echo build'
+                    sh 'mvn clean package -DskipTests=true'
                 }
             }
 
             stage ('test') {
                 steps {
                     parallel (
-                        echo "The build number is even"
-                        echo "The build number is even"
-                        //sh 'echo test 1'
-                        //sh 'echo test 2'
+                        sh 'mvn clean package -DskipTests=true'
+                        sh 'mvn clean package -DskipTests=true'
                     )
                 }
             }
 
             stage('deploy developmentServer'){
                 steps {
-                    echo "The build number is even"
-                    //sh 'echo deploy developmentServer' 
+                    sh 'mvn clean package -DskipTests=true'
                 }
             }
 
             stage('deploy staging'){
                 steps {
-                    echo "The build number is even"
-                    //sh 'echo staging'
+                    sh 'mvn clean package -DskipTests=true'
                 }
             }
 
             stage('deploy production'){
                 steps {
-                    echo "The build number is even"
-                   //sh 'echo deploy production' 
+                    sh 'mvn clean package -DskipTests=true'
                 }
             }
         }
