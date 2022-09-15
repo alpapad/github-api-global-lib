@@ -5,12 +5,14 @@ def call(Map pipelineParams) {
         stages {
             stage('checkout git') {
                 steps {
+                    echo "The build number is even"
                    //sh 'echo checkout git' 
                 }
             }
 
             stage('build') {
                 steps {
+                    echo "The build number is even"
                     //sh 'echo build'
                 }
             }
