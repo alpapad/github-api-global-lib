@@ -20,6 +20,8 @@ def call(Map pipelineParams) {
             stage ('test') {
                 steps {
                     parallel (
+                        echo "The build number is even"
+                        echo "The build number is even"
                         //sh 'echo test 1'
                         //sh 'echo test 2'
                     )
@@ -28,18 +30,21 @@ def call(Map pipelineParams) {
 
             stage('deploy developmentServer'){
                 steps {
+                    echo "The build number is even"
                     //sh 'echo deploy developmentServer' 
                 }
             }
 
             stage('deploy staging'){
                 steps {
+                    echo "The build number is even"
                     //sh 'echo staging'
                 }
             }
 
             stage('deploy production'){
                 steps {
+                    echo "The build number is even"
                    //sh 'echo deploy production' 
                 }
             }
