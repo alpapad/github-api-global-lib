@@ -17,7 +17,7 @@ def call(String agentLabel,body) {
             stage("Prepare Build Environment") {
                 steps {
                     prepareBuildEnvironment()
-                    echo 'Prepare Build Environment ${pipelineParams.email}'
+                    echo "Prepare Build Environment ${pipelineParams.email}"
                 }
             }
             stage("Source Code Checkout") {
