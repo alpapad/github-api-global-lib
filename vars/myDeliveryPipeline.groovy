@@ -22,8 +22,8 @@ def call(String agentLabel,body) {
                 agent { label "${agentLabel}" }
                 steps {
                     prepareBuildEnvironment()
-                    helloWorld(name: "prepareBuildEnvironment")
-                    helloWorldExternal()
+                    //helloWorld(name: "prepareBuildEnvironment")
+                    //helloWorldExternal()
                 }
             }
             stage("Source Code Checkout") {
@@ -50,13 +50,15 @@ def call(String agentLabel,body) {
             stage("Publish Artifacts") {
                 agent { label "${agentLabel}" }
                 steps {
-                    publishArtifacts(name: "publishArtifacts")
+                    echo 'Publish Artifacts'
+                    //publishArtifacts(name: "publishArtifacts")
                 }
             }
             stage("Deploy Application") {
                 agent { label "${agentLabel}" }
                 steps {
-                    deployApplication(name: "deployApplication")
+                     echo 'Deploy Application'
+                     //deployApplication(name: "deployApplication")
                 }
             }
             //stage("Long Running Stage") {
