@@ -15,20 +15,17 @@ def call(String agentLabel,body) {
                 }
             }
             stage("Prepare Build Environment") {
-                agent { label "${agentLabel}" }
                 steps {
                     prepareBuildEnvironment()
-                    echo 'Prepare Build Environment'
+                    echo 'Prepare Build Environment ${pipelineParams.email}'
                 }
             }
             stage("Source Code Checkout") {
-                agent { label "${agentLabel}" }
                 steps {
                     echo 'Source Code Checkout'
                 }
             }
             stage("SonarQube Scan") {
-                agent { label "${agentLabel}" }
                 when {
                     branch 'master'
                 }
@@ -37,19 +34,16 @@ def call(String agentLabel,body) {
                 }
             }
             stage("Build Application") {
-                agent { label "${agentLabel}" }
                 steps {
                     echo 'build'
                 }
             }
             stage("Publish Artifacts") {
-                agent { label "${agentLabel}" }
                 steps {
                     echo 'Publish Artifacts'
                 }
             }
             stage("Deploy Application") {
-                agent { label "${agentLabel}" }
                 steps {
                      echo 'Deploy Application'
                 }
