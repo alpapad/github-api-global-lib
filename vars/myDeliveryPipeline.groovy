@@ -7,7 +7,7 @@ def call(body) {
     body()
     
     pipeline {
-        agent any
+        agent none
         stages {
             stage('checkout git') {
                 steps {
