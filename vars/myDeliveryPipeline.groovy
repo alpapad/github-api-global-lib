@@ -11,7 +11,6 @@ def call(Closure body) {
             stage("echo parameters") {
                 steps {
                     sh "env | sort"
-                    echo "${agentLabel}"              
                 }
             }
             stage("Prepare Build Environment") {
@@ -23,6 +22,7 @@ def call(Closure body) {
             stage("Source Code Checkout") {
                 steps {
                     echo 'Source Code Checkout'
+                    sh "ls"
                 }
             }
             stage("SonarQube Scan") {
