@@ -12,24 +12,20 @@ def call(String agentLabel,body) {
                 agent { label "${agentLabel}" }
                 steps {
                     sh "env | sort"
-                    echo "${agentLabel}"
-                    //echo "${pipelineParams.osConfiguration}"
-                    //echo "${pipelineParams.osConfiguration.OS_VERSION}"
-                    //echo "${pipelineParams.osConfiguration.DIR_TYPE}"                    
+                    echo "${agentLabel}"              
                 }
             }
             stage("Prepare Build Environment") {
                 agent { label "${agentLabel}" }
                 steps {
                     prepareBuildEnvironment()
-                    //helloWorld(name: "prepareBuildEnvironment")
-                    //helloWorldExternal()
+                    echo 'Prepare Build Environment'
                 }
             }
             stage("Source Code Checkout") {
                 agent { label "${agentLabel}" }
                 steps {
-                    echo 'scc'
+                    echo 'Source Code Checkout'
                 }
             }
             stage("SonarQube Scan") {
@@ -51,42 +47,19 @@ def call(String agentLabel,body) {
                 agent { label "${agentLabel}" }
                 steps {
                     echo 'Publish Artifacts'
-                    //publishArtifacts(name: "publishArtifacts")
                 }
             }
             stage("Deploy Application") {
                 agent { label "${agentLabel}" }
                 steps {
                      echo 'Deploy Application'
-                     //deployApplication(name: "deployApplication")
                 }
             }
-            //stage("Long Running Stage") {
-            //    agent { label "${agentLabel}" }
-            //    steps {
-            //        script {
-            //            hook = registerWebhook()
-            //        }
-            //    }
-            //}
-            //stage("Waiting for Webhook") {
-            //    steps {
-            //        echo "Waiting for POST to ${hook.getURL()}"
-            //        script {
-            //            data = waitForWebhook hook
-            //        }
-            //        echo "Webhook called with data: ${data}"
-            //    }
-            //}         
+  
         }
-        //post {
-        //    always {
-        //        sendNotification()
-        //    }
-        //}
         post {
             always {
-              addSidebarLink()
+              echo 'Post action'
             }
         }
     }
