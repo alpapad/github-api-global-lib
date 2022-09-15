@@ -6,21 +6,22 @@ def call(Map pipelineParams) {
             stage('checkout git') {
                 steps {
                     //git branch: pipelineParams.branch, credentialsId: 'GitCredentials', url: pipelineParams.scmUrl
-                  sh "echo checkout git" 
+                  sh 'echo checkout git' 
                 }
             }
 
             stage('build') {
                 steps {
                     //sh 'mvn clean package -DskipTests=true'
-                    sh "echo build" 
+                    sh 'echo build'
                 }
             }
 
             stage ('test') {
                 steps {
                     parallel (
-                        sh "echo test" 
+                        sh 'echo test 1'
+                        sh 'echo test 2'
                         //"unit tests": { sh 'mvn test' },
                         //"integration tests": { sh 'mvn integration-test' }
                     )
@@ -30,21 +31,21 @@ def call(Map pipelineParams) {
             stage('deploy developmentServer'){
                 steps {
                     //deploy(pipelineParams.developmentServer, pipelineParams.serverPort)
-                    sh "echo deploy developmentServer" 
+                    sh 'echo deploy developmentServer' 
                 }
             }
 
             stage('deploy staging'){
                 steps {
                     //deploy(pipelineParams.stagingServer, pipelineParams.serverPort)
-                    sh "echo staging" 
+                    sh 'echo staging'
                 }
             }
 
             stage('deploy production'){
                 steps {
                    // deploy(pipelineParams.productionServer, pipelineParams.serverPort)
-                   sh "echo deploy production" 
+                   sh 'echo deploy production' 
                 }
             }
         }
