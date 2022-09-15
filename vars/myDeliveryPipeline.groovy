@@ -1,56 +1,90 @@
-def call(body) {
-
-    // evaluate the body block, and collect configuration into the object
+def call(String agentLabel,body) {
+    
     def pipelineParams= [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = pipelineParams
     body()
-    
+
     pipeline {
-        agent { label "linux" }
+        agent none
         stages {
-            stage('checkout git') {
+            stage("echo parameters") {
+                agent { label "${agentLabel}" }
                 steps {
-                    sh "mvn clean package -DskipTests=true"
+                    sh "env | sort"
+                    echo "${agentLabel}"
+                    //echo "${pipelineParams.osConfiguration}"
+                    //echo "${pipelineParams.osConfiguration.OS_VERSION}"
+                    //echo "${pipelineParams.osConfiguration.DIR_TYPE}"                    
                 }
             }
-
-            stage('build') {
+            stage("Prepare Build Environment") {
+                agent { label "${agentLabel}" }
                 steps {
-                    sh "mvn clean package -DskipTests=true"
+                    prepareBuildEnvironment()
+                    helloWorld(name: "prepareBuildEnvironment")
+                    helloWorldExternal()
                 }
             }
-
-            stage ('test') {
+            stage("Source Code Checkout") {
+                agent { label "${agentLabel}" }
                 steps {
-                    parallel (
-                        sh "mvn clean package -DskipTests=true"
-                        sh "mvn clean package -DskipTests=true"
-                    )
+                    echo 'scc'
                 }
             }
-
-            stage('deploy developmentServer'){
+            stage("SonarQube Scan") {
+                agent { label "${agentLabel}" }
+                when {
+                    branch 'master'
+                }
                 steps {
-                    sh "mvn clean package -DskipTests=true"
+                    echo 'scan'
                 }
             }
-
-            stage('deploy staging'){
+            stage("Build Application") {
+                agent { label "${agentLabel}" }
                 steps {
-                    sh "mvn clean package -DskipTests=true"
+                    echo 'build'
                 }
             }
-
-            stage('deploy production'){
+            stage("Publish Artifacts") {
+                agent { label "${agentLabel}" }
                 steps {
-                    sh "mvn clean package -DskipTests=true"
+                    publishArtifacts(name: "publishArtifacts")
                 }
             }
+            stage("Deploy Application") {
+                agent { label "${agentLabel}" }
+                steps {
+                    deployApplication(name: "deployApplication")
+                }
+            }
+            //stage("Long Running Stage") {
+            //    agent { label "${agentLabel}" }
+            //    steps {
+            //        script {
+            //            hook = registerWebhook()
+            //        }
+            //    }
+            //}
+            //stage("Waiting for Webhook") {
+            //    steps {
+            //        echo "Waiting for POST to ${hook.getURL()}"
+            //        script {
+            //            data = waitForWebhook hook
+            //        }
+            //        echo "Webhook called with data: ${data}"
+            //    }
+            //}         
         }
+        //post {
+        //    always {
+        //        sendNotification()
+        //    }
+        //}
         post {
-            failure {
-                mail to: pipelineParams.email, subject: 'Pipeline failed', body: "${env.BUILD_URL}"
+            always {
+              addSidebarLink()
             }
         }
     }
