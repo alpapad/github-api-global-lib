@@ -6,10 +6,9 @@ def call(String agentLabel,body) {
     body()
 
     pipeline {
-        agent none
+        agent { label "${agentLabel}" }
         stages {
             stage("echo parameters") {
-                agent { label "${agentLabel}" }
                 steps {
                     sh "env | sort"
                     echo "${agentLabel}"              
